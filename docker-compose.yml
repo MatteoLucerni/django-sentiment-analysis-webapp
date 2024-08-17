@@ -14,7 +14,7 @@ services:
 
   web:
     build: .
-    command: python manage.py test
+    command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/app
     ports:
