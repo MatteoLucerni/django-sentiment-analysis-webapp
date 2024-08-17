@@ -34,6 +34,7 @@
       <form
         method="POST"
         class="mt-4"
+        onsubmit="showLoader()"
       >
         {% csrf_token %}
         <div class="mb-3">
@@ -62,6 +63,14 @@
           </button>
         </div>
       </form>
+
+      {# Loader #}
+      <div
+        id="loader"
+        class="loader text-center my-5 d-none"
+      >
+        <i class="fas fa-spinner fa-spin fa-4x"></i>
+      </div>
 
       {# Analysis Result #} {% if sentiment %}
       <div class="my-5">
