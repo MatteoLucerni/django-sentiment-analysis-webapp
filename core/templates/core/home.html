@@ -32,6 +32,11 @@
 
       {% if user.is_authenticated %}
       <div class="d-flex justify-content-end mt-4 gap-2">
+        <a
+          href="{% url 'analysis_history' %}"
+          class="btn btn-secondary"
+          >View Analysis History</a
+        >
         <form
           method="POST"
           action="{% url 'logout' %}"
