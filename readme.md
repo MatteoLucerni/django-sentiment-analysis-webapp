@@ -94,6 +94,34 @@ Ensure you have the following installed on your system:
 - **PostgreSQL:** A powerful, open-source object-relational database system that is well-suited for handling complex queries and large datasets.
 - **TextBlob:** A simple library for processing textual data, providing an easy-to-use API for diving into common natural language processing (NLP) tasks such as part-of-speech tagging, noun phrase extraction, sentiment analysis, classification, translation, and more. TextBlob was chosen for its simplicity and effectiveness for basic sentiment analysis.
 
+### Database Structure
+
+The project's database is organized into two main entities:
+
+#### User
+
+- **id**: Unique identifier for each user (primary key). This is managed by Django's default authentication system.
+- **username**: Unique username for each user.
+- **email**: Email address of the user.
+- **first_name**: (Optional) First name of the user.
+- **last_name**: (Optional) Last name of the user.
+- **password**: Hashed password of the user.
+- **is_staff**: Boolean indicating if the user has staff privileges.
+- **is_superuser**: Boolean indicating if the user has superuser privileges.
+
+#### Analysis
+
+- **id**: Unique identifier for each analysis (primary key).
+- **user**: Reference to the user who performed the analysis (foreign key to the User entity). This can be null if the analysis was performed by an anonymous user.
+- **input_text**: The input text provided by the user for analysis.
+- **polarity**: Polarity score of the analysis (ranging from -1 to 1, where -1 is negative, 0 is neutral, and 1 is positive).
+- **subjectivity**: Subjectivity score of the analysis (ranging from 0 to 1, where 0 is objective and 1 is subjective).
+- **analysis_date**: The date and time when the analysis was performed.
+
+#### Relationship Between Entities
+
+- **User and Analysis**: There is a "one-to-many" relationship between User and Analysis, where a single user can have multiple analyses associated with them. This allows tracking the history of analyses performed by each user. If the analysis is performed by an anonymous user, the `user` field in the `Analysis` table will be null.
+
 ### Docker Configuration
 
 - **Dockerfile:**
