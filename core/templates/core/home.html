@@ -18,18 +18,24 @@
     <title>Sentiment Analysis</title>
   </head>
   <body>
-    <h1>Write your text and get a real time Sentiment Analysis</h1>
-    {% comment %} csrf token to autenticate user actions {% endcomment %}
-    <form method="POST">
-      {% csrf_token %}
+    <div class="container my-5">
+      <div class="text-center mb-5">
+        <h1 class="mb-0">Sentiment Analysis Tool</h1>
+        <p>Write your text and get a real time Sentiment Analysis</p>
+      </div>
 
-      <textarea
-        name="user_input"
-        rows="4"
-        cols="50"
-        placeholder="Write here..."
-      ></textarea>
-      <button type="submit">START</button>
-    </form>
+      {% comment %} csrf token to autenticate user actions {% endcomment %}
+      <form method="POST">
+        {% csrf_token %}
+
+        <textarea
+          name="user_input"
+          rows="4"
+          cols="50"
+          placeholder="Write here..."
+        ></textarea>
+        <button type="submit">START</button>
+      </form>
+    </div>
   </body>
 </html>
