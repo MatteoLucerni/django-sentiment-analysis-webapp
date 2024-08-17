@@ -57,10 +57,13 @@
       </form>
 
       {# Analysis Result #} {% if sentiment %}
-      <div class="mt-4">
+      <div class="mt-5">
         <div class="card">
           <div class="card-body">
-            <h3 class="card-title">Analysis Result</h3>
+            <h3 class="card-title text-center mb-3">Analysis Result</h3>
+            <p class="card-text">
+              <strong>Input Text:</strong> {{ user_input }}
+            </p>
             <p class="card-text"><strong>Sentiment:</strong> {{ sentiment }}</p>
             <p class="card-text"><strong>Polarity:</strong> {{ polarity }}</p>
             <p class="card-text">
