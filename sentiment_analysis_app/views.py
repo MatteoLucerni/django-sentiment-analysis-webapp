@@ -46,3 +46,12 @@ def analyze_sentiment(request):
             "user_input": user_input,
         },
     )
+
+
+@login_required
+def analysis_history(request):
+    # Get all analyses for the current user
+    analyses = Analysis.objects.filter(user=request.user).order_by("-analysis_date")
+    return render(
+        request, "sentiment_analysis_app/history.html", {"analyses": analyses}
+    )

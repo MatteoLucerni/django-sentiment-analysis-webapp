@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Analysis History</title>
+
+    <!-- Bootstrap CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css"
+      integrity="sha512-jnSuA4Ss2PkkikSOLtYs8BlYIeeIK1h99ty4YfvRPAlzr377vr3CXDb7sb7eEEBYjDtcYj+AjBH3FLv5uSJuXg=="
+      crossorigin="anonymous"
+    />
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Your Analysis History</h1>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end my-4">
+            <a href="{% url 'home' %}" class="btn btn-primary btn-lg">Back to Home</a>
+        </div>
+        {% if analyses %}
+        <div class="list-group mt-4">
+            {% for analysis in analyses %}
+            <div class="list-group-item">
+                <h5>Input Text:</h5>
+                <p>{{ analysis.input_text }}</p>
+                <h5>Results:</h5>
+                <p>
+                    <strong>Sentiment:</strong> {{ analysis.polarity|floatformat:2 }}
+                    {% if analysis.polarity > 0.5 %}
+                        <span class="badge bg-success">Very Positive</span>
+                    {% elif analysis.polarity > 0 %}
+                        <span class="badge bg-success">Positive</span>
+                    {% elif analysis.polarity < -0.5 %}
+                        <span class="badge bg-danger">Very Negative</span>
+                    {% elif analysis.polarity < 0 %}
+                        <span class="badge bg-danger">Negative</span>
+                    {% else %}
+                        <span class="badge bg-secondary">Neutral</span>
+                    {% endif %}
+                </p>
+                <p>
+                    <strong>Subjectivity:</strong> {{ analysis.subjectivity|floatformat:2 }}
+                </p>
+                <p>
+                    <small class="text-muted">Date: {{ analysis.analysis_date }}</small>
+                </p>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p class="text-center mt-4">You have no analysis history yet.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
