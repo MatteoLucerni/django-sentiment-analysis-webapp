@@ -25,16 +25,30 @@
       </div>
 
       {% comment %} csrf token to autenticate user actions {% endcomment %}
-      <form method="POST">
+      <form
+        method="POST"
+        class="mt-4 card bg-light p-5"
+      >
         {% csrf_token %}
 
-        <textarea
-          name="user_input"
-          rows="4"
-          cols="50"
-          placeholder="Write here..."
-        ></textarea>
-        <button type="submit">START</button>
+        <div class="mb-3">
+          <textarea
+            id="user_input"
+            name="user_input"
+            class="form-control"
+            rows="4"
+            placeholder="Write here..."
+          ></textarea>
+        </div>
+
+        <div class="d-flex justify-content-center">
+          <button
+            type="submit"
+            class="btn btn-primary btn-lg w-auto"
+          >
+            START
+          </button>
+        </div>
       </form>
     </div>
   </body>
