@@ -30,7 +30,35 @@
         <p>Enter the text for sentiment analysis</p>
       </div>
 
-      {# Input form for text #}
+      {% if user.is_authenticated %}
+      <div class="d-flex justify-content-end mt-4 gap-2">
+        <form
+          method="POST"
+          action="{% url 'logout' %}"
+        >
+          {% csrf_token %}
+          <button
+            type="submit"
+            class="btn btn-danger"
+          >
+            Logout
+          </button>
+        </form>
+      </div>
+      {% else %}
+      <div class="d-flex justify-content-end mt-4 gap-2">
+        <a
+          href="{% url 'login' %}"
+          class="btn btn-primary"
+          >Login</a
+        >
+        <a
+          href="{% url 'register' %}"
+          class="btn btn-secondary"
+          >Register</a
+        >
+      </div>
+      {% endif %} {# Input form for text #}
       <form
         method="POST"
         class="mt-4"
@@ -132,11 +160,11 @@
       {% endif %}
     </div>
 
-    {# Loader Logic #}
     <script>
-      function showLoader() {
-        document.getElementById('loader').classList.remove('d-none');
-      }
+      {# Loader Logic #}
+        function showLoader() {
+          document.getElementById('loader').classList.remove('d-none');
+        }
     </script>
 
     {# Bootstrap Script #}
