@@ -25,6 +25,16 @@ def analyze_sentiment(request):
                 else "Negative" if polarity < 0 else "Neutral"
             )
 
+            # Save analysis to database
+            analysis = Analysis.objects.create(
+                user=request.user if request.user.is_authenticated else None,
+                input_text=user_input,
+                polarity=polarity,
+                subjectivity=subjectivity,
+                analysis_date=timezone.now(),
+            )
+            analysis.save()
+
     return render(
         request,
         "core/home.html",
