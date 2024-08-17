@@ -66,6 +66,7 @@ DATABASES = {
     }
 }
 
+LOGIN_URL = "/users/login/"
 
 ROOT_URLCONF = "sentiment_analysis.urls"
 
