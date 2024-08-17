@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>Sentiment Analysis</title>
+  </head>
+  <body>
+    <h1>Write your text and get a real time Sentiment Analysis</h1>
+    <form method="POST">
+      {% comment %} csrf token to autenticate user actions {% endcomment %} {%
+      csrf_token %}
+      <textarea
+        name="user_input"
+        rows="4"
+        cols="50"
+        placeholder="Write here..."
+      ></textarea>
+      <button type="submit">START</button>
+    </form>
+  </body>
+</html>
