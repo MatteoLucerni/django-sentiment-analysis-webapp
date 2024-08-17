@@ -159,31 +159,32 @@ The project's database is organized into two main entities:
 
   ```yaml
   services:
-    db:
-      image: postgres:16
-      volumes:
-        - postgres_data:/var/lib/postgresql/data/
-      env_file:
-        - .env
-      ports:
-        - '5432:5432'
-      healthcheck:
-        test: ['CMD-SHELL', 'pg_isready -U $POSTGRES_USER -d $POSTGRES_DB']
-        interval: 10s
-        retries: 5
+  db:
+    image: postgres:16
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - .env
+    ports:
+      - '5432:5432'
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U $POSTGRES_USER -d $POSTGRES_DB']
+      interval: 10s
+      retries: 5
 
-    web:
-      build: .
-      command: python manage.py runserver 0.0.0.0:8000
-      volumes:
-        - .:/app
-      ports:
-        - '8000:8000'
-      depends_on:
-        db:
-          condition: service_healthy
-      env_file:
-        - .env
+  web:
+    build: .
+    command: >
+      sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - .:/app
+    ports:
+      - '8000:8000'
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file:
+      - .env
 
   volumes:
     postgres_data:
@@ -199,3 +200,7 @@ The project's database is organized into two main entities:
 
 - **Unit Tests:** Ensure that the project’s functionality is correct and that new changes don’t introduce regressions.
 - **Dockerized Testing:** Run tests within the Docker environment to ensure consistency across different development environments.
+
+```
+
+```
