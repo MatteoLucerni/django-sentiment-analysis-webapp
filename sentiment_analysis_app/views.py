@@ -10,7 +10,7 @@ def analyze_sentiment(request):
     sentiment = None
     polarity = None
     subjectivity = None
-    user_input = None
+    user_input = ""
 
     if request.method == "POST":
         user_input = request.POST.get("user_input")
