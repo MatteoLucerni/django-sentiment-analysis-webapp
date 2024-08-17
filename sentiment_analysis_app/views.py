@@ -1,3 +1,57 @@
 from django.shortcuts import render
+from textblob import TextBlob
+from .models import Analysis
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+from django.utils import timezone
 
-# Create your views here.
+
+def analyze_sentiment(request):
+    sentiment = None
+    polarity = None
+    subjectivity = None
+    user_input = ""
+
+    if request.method == "POST":
+        user_input = request.POST.get("user_input")
+        if user_input:
+
+            # TextBlob sentiment analysis
+            blob = TextBlob(user_input)
+            polarity = blob.sentiment.polarity
+            subjectivity = blob.sentiment.subjectivity
+            sentiment = (
+                "Positive"
+                if polarity > 0
+                else "Negative" if polarity < 0 else "Neutral"
+            )
+
+            # Save analysis to database
+            analysis = Analysis.objects.create(
+                user=request.user if request.user.is_authenticated else None,
+                input_text=user_input,
+                polarity=polarity,
+                subjectivity=subjectivity,
+                analysis_date=timezone.now(),
+            )
+            analysis.save()
+
+    return render(
+        request,
+        "core/home.html",
+        {
+            "sentiment": sentiment,
+            "polarity": polarity,
+            "subjectivity": subjectivity,
+            "user_input": user_input,
+        },
+    )
+
+
+@login_required
+def analysis_history(request):
+    # Get all analyses for the current user
+    analyses = Analysis.objects.filter(user=request.user).order_by("-analysis_date")
+    return render(
+        request, "sentiment_analysis_app/history.html", {"analyses": analyses}
+    )

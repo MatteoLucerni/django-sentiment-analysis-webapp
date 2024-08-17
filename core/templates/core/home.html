@@ -1,0 +1,122 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Homepage{% endblock %}
+
+{% block extra_css %}
+{# Fontawsome CDN #}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+  integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+  crossorigin="anonymous" />
+{% endblock %}
+
+{% block content %}
+<div class="text-center">
+  <h1>Sentiment Analysis</h1>
+  <p class="my-0">
+    Enter the text for sentiment analysis. Register to keep track of your
+    past analyses!
+  </p>
+  <p class="mb-5">
+    English Required
+  </p>
+</div>
+
+{% if user.is_authenticated %}
+<div class="d-flex justify-content-end mt-4 gap-2">
+  <a href="{% url 'analysis_history' %}" class="btn btn-secondary">View Analysis History</a>
+  <form method="POST" action="{% url 'logout' %}">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">
+      Logout
+    </button>
+  </form>
+</div>
+{% else %}
+<div class="d-flex justify-content-end mt-4 gap-2">
+  <a href="{% url 'login' %}" class="btn btn-primary">Login</a>
+  <a href="{% url 'register' %}" class="btn btn-secondary">Register</a>
+</div>
+{% endif %} {# Input form for text #}
+<form method="POST" class="mt-4" onsubmit="showLoader()">
+  {% csrf_token %}
+  <div class="mb-3">
+    <label for="user_input" class="form-label">Text:</label>
+    <textarea required id="user_input" name="user_input" class="form-control" rows="4" placeholder="Write here...">
+{{ user_input }}</textarea>
+  </div>
+
+  <div class="d-grid">
+    <button type="submit" class="btn btn-primary btn-lg">
+      Analyze
+    </button>
+  </div>
+</form>
+
+{# Loader #}
+<div id="loader" class="loader text-center my-5 d-none">
+  <i class="fas fa-spinner fa-spin fa-4x"></i>
+</div>
+
+{# Analysis Result #} {% if sentiment %}
+<div class="my-5">
+  <div class="card">
+    <div class="card-body">
+      <h3 class="card-title text-center mb-0">Analysis Result</h3>
+
+      {# Simple explanation of the sentiment #} {% if polarity > 0.5 %}
+      <p class="mb-5 text-success text-center">
+        <strong>The text expresses a very positive sentiment.</strong>
+      </p>
+      {% elif polarity > 0 %}
+      <p class="mb-5 text-success text-center">
+        <strong>The text expresses a positive sentiment.</strong>
+      </p>
+      {% elif polarity < -0.5 %} <p class="mb-5 text-danger text-center">
+        <strong>The text expresses a very negative sentiment.</strong>
+        </p>
+        {% elif polarity < 0 %} <p class="mb-5 text-danger text-center">
+          <strong>The text expresses a negative sentiment.</strong>
+          </p>
+          {% else %}
+          <p class="mb-5 text-muted text-center">
+            <strong>The text expresses a neutral sentiment.</strong>
+          </p>
+          {% endif %} {# Detailed results #}
+          <p class="card-text">
+            <strong>Input Text:</strong> {{ user_input }}
+          </p>
+          <p class="card-text">
+            <strong>Sentiment:</strong>
+            {% if polarity > 0.5 %}
+            <span class="badge bg-success">Very Positive</span>
+            {% elif polarity > 0 %}
+            <span class="badge bg-success">Positive</span>
+            {% elif polarity < -0.5 %} <span class="badge bg-danger">Very Negative</span>
+              {% elif polarity < 0 %} <span class="badge bg-danger">Negative</span>
+                {% else %}
+                <span class="badge bg-secondary">Neutral</span>
+                {% endif %}
+          </p>
+          <p class="card-text"><strong>Polarity:</strong> {{ polarity }}</p>
+          <p class="card-text">
+            <strong>Subjectivity:</strong> {{ subjectivity }}
+          </p>
+          <p class="card-text">
+            <em>Polarity ranges from -1 (very negative) to 1 (very positive).
+              Subjectivity ranges from 0 (objective) to 1 (subjective).</em>
+          </p>
+    </div>
+  </div>
+</div>
+{% endif %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  // Loader Logic
+  function showLoader() {
+    document.getElementById('loader').classList.remove('d-none');
+  }
+</script>
+{% endblock %}

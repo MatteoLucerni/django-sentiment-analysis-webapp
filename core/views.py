@@ -6,6 +6,7 @@ def home_view(request):
     if request.method == "POST":
         user_input = request.POST.get("user_input")
 
+        # handleing user input
         return HttpResponse(f"Received text: {user_input}")
 
     return render(request, "core/home.html")
