@@ -132,6 +132,13 @@
       {% endif %}
     </div>
 
+    {# Loader Logic #}
+    <script>
+      function showLoader() {
+        document.getElementById('loader').classList.remove('d-none');
+      }
+    </script>
+
     {# Bootstrap Script #}
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"
