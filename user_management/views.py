@@ -26,3 +26,10 @@ def login_view(request):
     else:
         form = AuthenticationForm()
     return render(request, "user_management/login.html", {"form": form})
+
+
+@login_required
+def logout_view(request):
+    if request.method == "POST":
+        logout(request)
+        return redirect("home")
