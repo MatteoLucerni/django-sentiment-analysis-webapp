@@ -10,9 +10,10 @@
   </head>
   <body>
     <h1>Write your text and get a real time Sentiment Analysis</h1>
+    {% comment %} csrf token to autenticate user actions {% endcomment %}
     <form method="POST">
-      {% comment %} csrf token to autenticate user actions {% endcomment %} {%
-      csrf_token %}
+      {% csrf_token %}
+
       <textarea
         name="user_input"
         rows="4"
