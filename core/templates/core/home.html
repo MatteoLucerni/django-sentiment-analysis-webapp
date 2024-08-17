@@ -8,7 +8,7 @@
     />
     <title>Sentiment Analysis</title>
 
-    {# Boostrap CDN #}
+    {# Bootstrap CDN #}
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css"
@@ -23,7 +23,7 @@
         <p>Enter the text for sentiment analysis</p>
       </div>
 
-      {# Iput form for text #}
+      {# Input form for text #}
       <form
         method="POST"
         class="mt-4"
@@ -57,17 +57,58 @@
       </form>
 
       {# Analysis Result #} {% if sentiment %}
-      <div class="mt-5">
+      <div class="my-5">
         <div class="card">
           <div class="card-body">
-            <h3 class="card-title text-center mb-3">Analysis Result</h3>
+            <h3 class="card-title text-center mb-0">Analysis Result</h3>
+
+            {# Simple explanation of the sentiment #} {% if polarity > 0.5 %}
+            <p class="mb-5 text-success text-center">
+              <strong>The text expresses a very positive sentiment.</strong>
+            </p>
+            {% elif polarity > 0 %}
+            <p class="mb-5 text-success text-center">
+              <strong>The text expresses a positive sentiment.</strong>
+            </p>
+            {% elif polarity < -0.5 %}
+            <p class="mb-5 text-danger text-center">
+              <strong>The text expresses a very negative sentiment.</strong>
+            </p>
+            {% elif polarity < 0 %}
+            <p class="mb-5 text-danger text-center">
+              <strong>The text expresses a negative sentiment.</strong>
+            </p>
+            {% else %}
+            <p class="mb-5 text-muted text-center">
+              <strong>The text expresses a neutral sentiment.</strong>
+            </p>
+            {% endif %} {# Detailed results #}
             <p class="card-text">
               <strong>Input Text:</strong> {{ user_input }}
             </p>
-            <p class="card-text"><strong>Sentiment:</strong> {{ sentiment }}</p>
+            <p class="card-text">
+              <strong>Sentiment:</strong>
+              {% if polarity > 0.5 %}
+              <span class="badge bg-success">Very Positive</span>
+              {% elif polarity > 0 %}
+              <span class="badge bg-success">Positive</span>
+              {% elif polarity < -0.5 %}
+              <span class="badge bg-danger">Very Negative</span>
+              {% elif polarity < 0 %}
+              <span class="badge bg-danger">Negative</span>
+              {% else %}
+              <span class="badge bg-secondary">Neutral</span>
+              {% endif %}
+            </p>
             <p class="card-text"><strong>Polarity:</strong> {{ polarity }}</p>
             <p class="card-text">
               <strong>Subjectivity:</strong> {{ subjectivity }}
+            </p>
+            <p class="card-text">
+              <em
+                >Polarity ranges from -1 (very negative) to 1 (very positive).
+                Subjectivity ranges from 0 (objective) to 1 (subjective).</em
+              >
             </p>
           </div>
         </div>
@@ -75,7 +116,7 @@
       {% endif %}
     </div>
 
-    {# Boostrap Script #}
+    {# Bootstrap Script #}
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"
       integrity="sha512-7Pi/otdlbbCR+LnW+F7PwFcSDJOuUJB3OxtEHbg4vSMvzvJjde4Po1v4BR9Gdc9aXNUNFVUY+SK51wWT8WF0Gg=="
