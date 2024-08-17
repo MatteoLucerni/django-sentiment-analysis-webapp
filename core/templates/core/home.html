@@ -58,13 +58,13 @@
           >Register</a
         >
       </div>
-      {% endif %}
+      {% endif %} {# Input form for text #}
       <form
         method="POST"
         class="mt-4"
         onsubmit="showLoader()"
       >
-        {# Input form for text #} {% csrf_token %}
+        {% csrf_token %}
         <div class="mb-3">
           <label
             for="user_input"
