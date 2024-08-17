@@ -39,7 +39,7 @@ Ensure you have the following installed on your system:
 
    ```bash
    git clone https://github.com/MatteoLucerni/django-sentiment-analysis-webapp.git
-   cd sentiment-analysis-webapp
+   cd django-sentiment-analysis-webapp
    ```
 
 2. **Set Up Environment Variables:**
