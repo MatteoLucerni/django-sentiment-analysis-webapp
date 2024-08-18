@@ -200,7 +200,3 @@ The project's database is organized into two main entities:
 
 - **Unit Tests:** Ensure that the project’s functionality is correct and that new changes don’t introduce regressions.
 - **Dockerized Testing:** Run tests within the Docker environment to ensure consistency across different development environments.
-
-```
-
-```
