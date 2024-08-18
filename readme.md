@@ -24,6 +24,28 @@ This project is a sentiment analysis web application that allows users to input 
 - **Feature branches:** Each new feature or bug fix is developed in its own branch.
 - **GitHub Issues:** Used to track features and tasks from the beginning of the project.
 
+### Django App Structure
+
+The Django project is organized into three separate apps, each with a distinct responsibility. This modular structure enhances maintainability, scalability, and separation of concerns:
+
+- **Core App:**
+
+  - Manages the homepage and basic templates.
+  - Centralizes common elements and pages that are used across the entire application.
+  - Handles the primary user interface and layout components that do not require specific business logic.
+
+- **Sentiment Analysis App:**
+
+  - Contains the core logic for sentiment analysis.
+  - Manages the process of analyzing user-inputted text, applying the TextBlob model, and storing the results.
+  - Isolates the sentiment analysis functionality, making it easier to update or replace in the future if needed.
+
+- **User Management:**
+  - Handles user authentication, registration, and profile management.
+  - Keeps the authentication logic separate from other aspects of the project, which enhances security and code clarity.
+
+This separation into distinct apps allows for more focused development and testing, enabling each component of the project to evolve independently while maintaining a clean and organized codebase.
+
 ## Installation and Setup
 
 ### Prerequisites
